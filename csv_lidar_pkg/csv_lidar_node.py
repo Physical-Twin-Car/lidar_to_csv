@@ -24,6 +24,7 @@ class CSVLidarNode(Node):
         self.csv_writer = csv.writer(self.csv_file)
         # Schrijf de header naar het CSV-bestand
         self.csv_writer.writerow(['Scan_number', 'Angle', 'Distance'])
+        #self.csv_writer.writerow(['Angle', 'Distance'])
 
     def lidar_callback(self, msg):
         if self.scans_received < self.num_scans:
@@ -35,6 +36,9 @@ class CSVLidarNode(Node):
             for distance in msg.ranges:
                 self.csv_writer.writerow([self.scans_received, angle, distance])
                 angle += angle_increment
+            #for distance in msg.ranges:
+            #    self.csv_writer.writerow([angle, distance])
+            #    angle += angle_increment
 
             self.csv_file.flush()
             
